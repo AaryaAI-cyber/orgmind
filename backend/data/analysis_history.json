@@ -1,0 +1,20 @@
+[
+  {
+    "id": "20260504102744",
+    "timestamp": "2026-05-04T10:27:44.150285",
+    "org_health_score": 21,
+    "executive_summary": "Project Phoenix is in a silent crisis. Three critical backend blockers have been stuck for an average of 7.3 days without PM visibility. Team Backend morale has dropped 22% this week with frustration keywords spiking. At current velocity, there is a 71% chance the May 8 deadline will be missed by 6-8 days. The root cause is a single point of failure: the auth service integration (PROJ-142) which blocks 4 downstream tasks.",
+    "critical_action": "TODAY: Escalate PROJ-142 to the PM and assign a senior engineer to pair with Priya Kumar on the auth service integration. This single action unblocks 4 downstream tasks and is the highest-leverage intervention available.",
+    "top_risks": [
+      "Auth service blocker (PROJ-142) \u2014 9 days stuck, blocks critical path, no PM awareness",
+      "Payment race condition (PROJ-156) \u2014 7 days stuck, causing production incidents, needs architecture rethink",
+      "Sprint velocity collapse \u2014 team delivering at 39% of planned pace, acceleration needed is unrealistic"
+    ],
+    "blocker_count": 3,
+    "blocker_severity": 100,
+    "overall_sentiment": 65,
+    "sentiment_trend": "stable",
+    "deadline_miss_prob": 95,
+    "demo_mode": true
+  }
+]

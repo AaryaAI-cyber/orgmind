@@ -1,0 +1,775 @@
+{
+  "company": "Acme Corp",
+  "project": "Project Phoenix",
+  "generated_at": "2026-05-04T00:00:00",
+  "jira_tickets": [
+    {
+      "ticket_id": "PROJ-142",
+      "title": "Auth service integration failing on staging",
+      "assignee": "Priya Kumar",
+      "team": "Backend",
+      "status": "In Progress",
+      "priority": "HIGH",
+      "story_points": 8,
+      "created_date": "2026-04-20T00:00:00",
+      "last_updated": "2026-04-25T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "auth",
+        "integration",
+        "blocking"
+      ],
+      "description": "OAuth2 flow breaks when redirecting from staging environment. Tokens expire immediately."
+    },
+    {
+      "ticket_id": "PROJ-156",
+      "title": "Fix race condition in payment processing",
+      "assignee": "Raj Mehta",
+      "team": "Backend",
+      "status": "In Progress",
+      "priority": "HIGH",
+      "story_points": 5,
+      "created_date": "2026-04-23T00:00:00",
+      "last_updated": "2026-04-27T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "payments",
+        "concurrency",
+        "critical"
+      ],
+      "description": "Duplicate charges occurring under high concurrency. Mutex not working as expected."
+    },
+    {
+      "ticket_id": "PROJ-163",
+      "title": "Database migration for user schema v3",
+      "assignee": "Sarah Chen",
+      "team": "Backend",
+      "status": "In Progress",
+      "priority": "MEDIUM",
+      "story_points": 5,
+      "created_date": "2026-04-26T00:00:00",
+      "last_updated": "2026-04-28T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "database",
+        "migration"
+      ],
+      "description": "Need to add new fields for user preferences and notification settings."
+    },
+    {
+      "ticket_id": "PROJ-171",
+      "title": "Implement email notification templates",
+      "assignee": "Alex Rivera",
+      "team": "Backend",
+      "status": "In Progress",
+      "priority": "MEDIUM",
+      "story_points": 3,
+      "created_date": "2026-04-30T00:00:00",
+      "last_updated": "2026-05-03T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "email",
+        "notifications"
+      ],
+      "description": "Build HTML email templates for welcome, password reset, and weekly digest."
+    },
+    {
+      "ticket_id": "PROJ-174",
+      "title": "Dashboard loading performance optimization",
+      "assignee": "Mike Johnson",
+      "team": "Frontend",
+      "status": "In Progress",
+      "priority": "MEDIUM",
+      "story_points": 5,
+      "created_date": "2026-05-01T00:00:00",
+      "last_updated": "2026-05-04T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "performance",
+        "frontend"
+      ],
+      "description": "Dashboard takes 4+ seconds to load. Need to optimize API calls and add caching."
+    },
+    {
+      "ticket_id": "PROJ-138",
+      "title": "Set up CI/CD pipeline for staging",
+      "assignee": "David Park",
+      "team": "DevOps",
+      "status": "Done",
+      "priority": "HIGH",
+      "story_points": 5,
+      "created_date": "2026-04-22T00:00:00",
+      "last_updated": "2026-05-02T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "devops",
+        "ci-cd"
+      ],
+      "description": "GitHub Actions pipeline for automated testing and staging deployment."
+    },
+    {
+      "ticket_id": "PROJ-145",
+      "title": "User profile page redesign",
+      "assignee": "Emma Wilson",
+      "team": "Frontend",
+      "status": "Done",
+      "priority": "MEDIUM",
+      "story_points": 3,
+      "created_date": "2026-04-25T00:00:00",
+      "last_updated": "2026-05-03T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "ui",
+        "profile"
+      ],
+      "description": "Redesign user profile with new avatar upload and bio section."
+    },
+    {
+      "ticket_id": "PROJ-148",
+      "title": "Add unit tests for payment module",
+      "assignee": "Raj Mehta",
+      "team": "Backend",
+      "status": "Done",
+      "priority": "HIGH",
+      "story_points": 3,
+      "created_date": "2026-04-24T00:00:00",
+      "last_updated": "2026-05-01T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "testing",
+        "payments"
+      ],
+      "description": "80% coverage target for payment processing module."
+    },
+    {
+      "ticket_id": "PROJ-151",
+      "title": "Implement search autocomplete",
+      "assignee": "Emma Wilson",
+      "team": "Frontend",
+      "status": "Done",
+      "priority": "LOW",
+      "story_points": 2,
+      "created_date": "2026-04-27T00:00:00",
+      "last_updated": "2026-05-02T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "search",
+        "ux"
+      ],
+      "description": "Add typeahead search suggestions to the main search bar."
+    },
+    {
+      "ticket_id": "PROJ-153",
+      "title": "Fix mobile responsive layout issues",
+      "assignee": "Mike Johnson",
+      "team": "Frontend",
+      "status": "Done",
+      "priority": "MEDIUM",
+      "story_points": 2,
+      "created_date": "2026-04-28T00:00:00",
+      "last_updated": "2026-05-03T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "mobile",
+        "css"
+      ],
+      "description": "Sidebar overlaps main content on screens < 768px."
+    },
+    {
+      "ticket_id": "PROJ-159",
+      "title": "API rate limiting middleware",
+      "assignee": "David Park",
+      "team": "Backend",
+      "status": "Done",
+      "priority": "HIGH",
+      "story_points": 3,
+      "created_date": "2026-04-26T00:00:00",
+      "last_updated": "2026-05-02T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "security",
+        "api"
+      ],
+      "description": "Implement rate limiting to prevent API abuse. 100 req/min per user."
+    },
+    {
+      "ticket_id": "PROJ-160",
+      "title": "Logging and monitoring setup",
+      "assignee": "David Park",
+      "team": "DevOps",
+      "status": "Done",
+      "priority": "MEDIUM",
+      "story_points": 5,
+      "created_date": "2026-04-25T00:00:00",
+      "last_updated": "2026-05-01T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "monitoring",
+        "observability"
+      ],
+      "description": "Set up structured logging with ELK stack and Grafana dashboards."
+    },
+    {
+      "ticket_id": "PROJ-175",
+      "title": "Implement payment gateway webhook handler",
+      "assignee": "Raj Mehta",
+      "team": "Backend",
+      "status": "Todo",
+      "priority": "HIGH",
+      "story_points": 8,
+      "created_date": "2026-05-01T00:00:00",
+      "last_updated": "2026-05-01T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "payments",
+        "webhooks"
+      ],
+      "description": "Handle Stripe webhook events for payment confirmation, refunds, and disputes."
+    },
+    {
+      "ticket_id": "PROJ-176",
+      "title": "Email notification preferences UI",
+      "assignee": "Emma Wilson",
+      "team": "Frontend",
+      "status": "Todo",
+      "priority": "MEDIUM",
+      "story_points": 3,
+      "created_date": "2026-05-02T00:00:00",
+      "last_updated": "2026-05-02T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "email",
+        "settings",
+        "ui"
+      ],
+      "description": "Settings page for users to configure which email notifications they receive."
+    },
+    {
+      "ticket_id": "PROJ-177",
+      "title": "Integrate third-party analytics SDK",
+      "assignee": "Mike Johnson",
+      "team": "Frontend",
+      "status": "Todo",
+      "priority": "LOW",
+      "story_points": 2,
+      "created_date": "2026-05-02T00:00:00",
+      "last_updated": "2026-05-02T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "analytics",
+        "integration"
+      ],
+      "description": "Add Mixpanel tracking for user engagement metrics."
+    },
+    {
+      "ticket_id": "PROJ-178",
+      "title": "Admin dashboard role-based access control",
+      "assignee": "Sarah Chen",
+      "team": "Backend",
+      "status": "Todo",
+      "priority": "HIGH",
+      "story_points": 5,
+      "created_date": "2026-05-03T00:00:00",
+      "last_updated": "2026-05-03T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "admin",
+        "rbac",
+        "security"
+      ],
+      "description": "Implement role-based access for admin, manager, and viewer roles."
+    },
+    {
+      "ticket_id": "PROJ-168",
+      "title": "SSO integration with corporate IdP",
+      "assignee": "Priya Kumar",
+      "team": "Backend",
+      "status": "Blocked",
+      "priority": "HIGH",
+      "story_points": 8,
+      "created_date": "2026-04-27T00:00:00",
+      "last_updated": "2026-04-30T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "sso",
+        "auth",
+        "enterprise"
+      ],
+      "description": "Need SAML metadata from customer IT team. Waiting on external dependency."
+    },
+    {
+      "ticket_id": "PROJ-170",
+      "title": "Load testing infrastructure setup",
+      "assignee": "David Park",
+      "team": "DevOps",
+      "status": "Blocked",
+      "priority": "MEDIUM",
+      "story_points": 3,
+      "created_date": "2026-04-29T00:00:00",
+      "last_updated": "2026-05-01T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "testing",
+        "infrastructure"
+      ],
+      "description": "Blocked on AWS account approval for load testing environment."
+    },
+    {
+      "ticket_id": "PROJ-172",
+      "title": "User onboarding flow redesign",
+      "assignee": "Emma Wilson",
+      "team": "Frontend",
+      "status": "In Progress",
+      "priority": "MEDIUM",
+      "story_points": 5,
+      "created_date": "2026-04-30T00:00:00",
+      "last_updated": "2026-05-04T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "onboarding",
+        "ux"
+      ],
+      "description": "New 3-step onboarding wizard with progress indicator."
+    },
+    {
+      "ticket_id": "PROJ-173",
+      "title": "API documentation with Swagger UI",
+      "assignee": "Alex Rivera",
+      "team": "Backend",
+      "status": "In Progress",
+      "priority": "LOW",
+      "story_points": 2,
+      "created_date": "2026-05-01T00:00:00",
+      "last_updated": "2026-05-03T00:00:00",
+      "sprint": "Sprint 23",
+      "labels": [
+        "documentation",
+        "api"
+      ],
+      "description": "Auto-generate API docs from FastAPI schemas. Add example requests."
+    }
+  ],
+  "slack_messages": [
+    {
+      "channel": "#backend-team",
+      "author": "Priya Kumar",
+      "timestamp": "2026-05-03T22:00:00",
+      "text": "Still waiting on the auth service to be ready, been a week now. This is getting ridiculous."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Raj Mehta",
+      "timestamp": "2026-05-03T19:00:00",
+      "text": "Can someone from backend take a look at PROJ-142? We're blocked on this and it's holding up everything."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Sarah Chen",
+      "timestamp": "2026-05-03T16:00:00",
+      "text": "The migration script keeps failing. I've been debugging this for two days and still no update from the DBA team."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Priya Kumar",
+      "timestamp": "2026-05-02T21:00:00",
+      "text": "Nobody has responded to my auth service PR review request. It's been 4 days."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Raj Mehta",
+      "timestamp": "2026-05-02T18:00:00",
+      "text": "pushed another hotfix, third one this week. The payment race condition is really frustrating."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Alex Rivera",
+      "timestamp": "2026-05-02T15:00:00",
+      "text": "Email templates are done! Moving on to the notification service integration."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Sarah Chen",
+      "timestamp": "2026-05-01T20:00:00",
+      "text": "Why are we still on the old schema? This migration should have been done last sprint."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Priya Kumar",
+      "timestamp": "2026-05-01T17:00:00",
+      "text": "I'm blocked on PROJ-142 and PROJ-168. Can't make progress on either without external input."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Raj Mehta",
+      "timestamp": "2026-04-30T22:00:00",
+      "text": "Finally fixed the unit tests. At least something is working."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Alex Rivera",
+      "timestamp": "2026-04-30T19:00:00",
+      "text": "Rate limiting middleware is merged and deployed. Working great in staging."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Sarah Chen",
+      "timestamp": "2026-04-30T16:00:00",
+      "text": "Has anyone heard back from the DBA team? I sent two emails and got ignored."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Priya Kumar",
+      "timestamp": "2026-04-29T21:00:00",
+      "text": "Feeling stuck. Auth and SSO are both waiting on other teams. Nothing I can do."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Raj Mehta",
+      "timestamp": "2026-04-29T18:00:00",
+      "text": "The concurrency issue is worse than we thought. Need to rethink the locking strategy entirely."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Alex Rivera",
+      "timestamp": "2026-04-28T20:00:00",
+      "text": "Great standup today, feels like we have a clear plan for the notification system."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Sarah Chen",
+      "timestamp": "2026-04-28T17:00:00",
+      "text": "Started the migration work. Hopeful I can get it done by Wednesday."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Priya Kumar",
+      "timestamp": "2026-04-27T21:00:00",
+      "text": "Auth service initial setup is done. Now need to integrate with staging. Should be straightforward."
+    },
+    {
+      "channel": "#backend-team",
+      "author": "Raj Mehta",
+      "timestamp": "2026-04-27T16:00:00",
+      "text": "Payment tests all passing. Good progress this week."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Emma Wilson",
+      "timestamp": "2026-05-03T21:00:00",
+      "text": "Profile page redesign is shipped! Really happy with how it turned out."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Mike Johnson",
+      "timestamp": "2026-05-03T18:00:00",
+      "text": "Dashboard performance is improving. Down to 2.1s load time from 4.3s."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Emma Wilson",
+      "timestamp": "2026-05-03T15:00:00",
+      "text": "Thanks @Mike for the responsive fixes, mobile looks great now!"
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Mike Johnson",
+      "timestamp": "2026-05-02T20:00:00",
+      "text": "Search autocomplete is working nicely. Users will love this feature."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Emma Wilson",
+      "timestamp": "2026-05-02T17:00:00",
+      "text": "Starting the onboarding flow today. The wireframes look clean."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Mike Johnson",
+      "timestamp": "2026-05-01T21:00:00",
+      "text": "Waiting on the backend API for the notification preferences. Can't build the UI without it."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Emma Wilson",
+      "timestamp": "2026-05-01T18:00:00",
+      "text": "Onboarding wizard step 1 is done. Moving to step 2. This is going well."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Mike Johnson",
+      "timestamp": "2026-04-30T20:00:00",
+      "text": "Fixed the sidebar overlap bug. CSS grid was the issue."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Emma Wilson",
+      "timestamp": "2026-04-30T17:00:00",
+      "text": "Good sprint so far for frontend. We're ahead of schedule on most items."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Mike Johnson",
+      "timestamp": "2026-04-29T19:00:00",
+      "text": "Analytics SDK integration is next week. Low priority but important for product."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Emma Wilson",
+      "timestamp": "2026-04-28T21:00:00",
+      "text": "Started the profile redesign. Using the new component library \u2014 it's really nice to work with."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Mike Johnson",
+      "timestamp": "2026-04-28T18:00:00",
+      "text": "Performance audit results are in. Main bottleneck is the dashboard API call \u2014 need backend to optimize."
+    },
+    {
+      "channel": "#frontend-team",
+      "author": "Emma Wilson",
+      "timestamp": "2026-04-27T20:00:00",
+      "text": "Sprint planning went well. Realistic goals this time. Feeling good about delivery."
+    },
+    {
+      "channel": "#general",
+      "author": "David Park",
+      "timestamp": "2026-05-03T20:00:00",
+      "text": "CI/CD pipeline is fully operational. All merges to main now auto-deploy to staging."
+    },
+    {
+      "channel": "#general",
+      "author": "Priya Kumar",
+      "timestamp": "2026-05-03T17:00:00",
+      "text": "Can someone from leadership prioritize PROJ-142? It's been stuck for over a week and blocks 4 other tickets."
+    },
+    {
+      "channel": "#general",
+      "author": "David Park",
+      "timestamp": "2026-05-02T19:00:00",
+      "text": "Monitoring dashboards are live. We can now see error rates and latency in real time."
+    },
+    {
+      "channel": "#general",
+      "author": "Raj Mehta",
+      "timestamp": "2026-05-02T16:00:00",
+      "text": "Payment processing had 3 incidents this week. We need to address the race condition before launch."
+    },
+    {
+      "channel": "#general",
+      "author": "Emma Wilson",
+      "timestamp": "2026-05-01T19:00:00",
+      "text": "Frontend sprint velocity is looking good. We should hit all our targets."
+    },
+    {
+      "channel": "#general",
+      "author": "Sarah Chen",
+      "timestamp": "2026-05-01T16:00:00",
+      "text": "Database migration is taking longer than expected. Schema changes are more complex than we scoped."
+    },
+    {
+      "channel": "#general",
+      "author": "David Park",
+      "timestamp": "2026-04-30T21:00:00",
+      "text": "Load testing is blocked on AWS account approval. Submitted the request 3 days ago."
+    },
+    {
+      "channel": "#general",
+      "author": "Priya Kumar",
+      "timestamp": "2026-04-30T18:00:00",
+      "text": "Sprint 23 midpoint check: backend is behind, frontend is on track. We need to discuss priorities."
+    },
+    {
+      "channel": "#general",
+      "author": "Alex Rivera",
+      "timestamp": "2026-04-29T20:00:00",
+      "text": "Notification service architecture is finalized. Starting implementation tomorrow."
+    },
+    {
+      "channel": "#general",
+      "author": "Mike Johnson",
+      "timestamp": "2026-04-29T17:00:00",
+      "text": "Great collaboration with backend team on the API contracts. Thanks for the quick turnaround."
+    },
+    {
+      "channel": "#general",
+      "author": "David Park",
+      "timestamp": "2026-04-28T19:00:00",
+      "text": "Grafana dashboards are set up. Logging is centralized. We're in good shape for observability."
+    },
+    {
+      "channel": "#general",
+      "author": "Sarah Chen",
+      "timestamp": "2026-04-28T16:00:00",
+      "text": "Migration work is starting. I have a plan but it's going to be tight."
+    },
+    {
+      "channel": "#general",
+      "author": "Raj Mehta",
+      "timestamp": "2026-04-27T20:00:00",
+      "text": "Payment module tests are all green. Confident in the core logic, just need to fix the concurrency edge case."
+    },
+    {
+      "channel": "#general",
+      "author": "Emma Wilson",
+      "timestamp": "2026-04-27T17:00:00",
+      "text": "UI component library is updated. All new components follow the design system now."
+    },
+    {
+      "channel": "#general",
+      "author": "David Park",
+      "timestamp": "2026-04-27T15:00:00",
+      "text": "Welcome to Sprint 23 everyone! Let's make it a great one."
+    },
+    {
+      "channel": "#general",
+      "author": "Priya Kumar",
+      "timestamp": "2026-04-28T22:00:00",
+      "text": "Quick reminder: PROJ-142 auth service is critical path. If this slips, payment integration can't start."
+    },
+    {
+      "channel": "#general",
+      "author": "Mike Johnson",
+      "timestamp": "2026-04-30T15:00:00",
+      "text": "Dashboard perf optimization PR is up for review. Would appreciate eyes on it."
+    },
+    {
+      "channel": "#general",
+      "author": "Alex Rivera",
+      "timestamp": "2026-05-01T22:00:00",
+      "text": "API docs are coming along nicely. Should have Swagger UI ready by end of week."
+    },
+    {
+      "channel": "#general",
+      "author": "Raj Mehta",
+      "timestamp": "2026-05-02T22:00:00",
+      "text": "Still working on the payment race condition. This is harder than expected."
+    },
+    {
+      "channel": "#general",
+      "author": "Sarah Chen",
+      "timestamp": "2026-05-03T14:00:00",
+      "text": "Migration script draft is ready but I need DBA review before running it. Still no response from them."
+    }
+  ],
+  "sprint_data": {
+    "sprint_name": "Sprint 23",
+    "sprint_goal": "Complete auth integration, payment processing, and user onboarding",
+    "start_date": "2026-04-28",
+    "end_date": "2026-05-08",
+    "total_days": 10,
+    "days_elapsed": 6,
+    "days_remaining": 4,
+    "planned_story_points": 84,
+    "completed_story_points": 31,
+    "in_progress_story_points": 33,
+    "todo_story_points": 20,
+    "team_members": [
+      {
+        "name": "Priya Kumar",
+        "role": "Senior Backend Engineer",
+        "team": "Backend"
+      },
+      {
+        "name": "Raj Mehta",
+        "role": "Backend Engineer",
+        "team": "Backend"
+      },
+      {
+        "name": "Sarah Chen",
+        "role": "Database Engineer",
+        "team": "Backend"
+      },
+      {
+        "name": "Alex Rivera",
+        "role": "Backend Engineer",
+        "team": "Backend"
+      },
+      {
+        "name": "Emma Wilson",
+        "role": "Senior Frontend Engineer",
+        "team": "Frontend"
+      },
+      {
+        "name": "Mike Johnson",
+        "role": "Frontend Engineer",
+        "team": "Frontend"
+      },
+      {
+        "name": "David Park",
+        "role": "DevOps Engineer",
+        "team": "DevOps"
+      }
+    ],
+    "features": [
+      {
+        "name": "Authentication & SSO",
+        "total_points": 16,
+        "completed_points": 0,
+        "status": "At Risk"
+      },
+      {
+        "name": "Payment Processing",
+        "total_points": 16,
+        "completed_points": 6,
+        "status": "At Risk"
+      },
+      {
+        "name": "User Onboarding",
+        "total_points": 10,
+        "completed_points": 5,
+        "status": "On Track"
+      },
+      {
+        "name": "Email Notifications",
+        "total_points": 8,
+        "completed_points": 3,
+        "status": "On Track"
+      },
+      {
+        "name": "Dashboard Performance",
+        "total_points": 7,
+        "completed_points": 4,
+        "status": "On Track"
+      },
+      {
+        "name": "DevOps & Monitoring",
+        "total_points": 16,
+        "completed_points": 13,
+        "status": "Complete"
+      },
+      {
+        "name": "UI Components",
+        "total_points": 11,
+        "completed_points": 0,
+        "status": "Not Started"
+      }
+    ],
+    "velocity_history": [
+      {
+        "sprint": "Sprint 19",
+        "planned": 70,
+        "completed": 68
+      },
+      {
+        "sprint": "Sprint 20",
+        "planned": 75,
+        "completed": 71
+      },
+      {
+        "sprint": "Sprint 21",
+        "planned": 78,
+        "completed": 65
+      },
+      {
+        "sprint": "Sprint 22",
+        "planned": 80,
+        "completed": 62
+      },
+      {
+        "sprint": "Sprint 23",
+        "planned": 84,
+        "completed": 31
+      }
+    ]
+  }
+}
