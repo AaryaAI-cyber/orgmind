@@ -133,8 +133,15 @@ Format as JSON with keys: executive_summary, critical_action, top_risks, answer_
     )
 
     try:
-        return json.loads(response)
-    except json.JSONDecodeError:
+        # Try to extract JSON from markdown code blocks
+        cleaned = response.strip()
+        if cleaned.startswith("```"):
+            cleaned = cleaned.split("```", 2)[1]
+            if cleaned.startswith("json"):
+                cleaned = cleaned[4:]
+            cleaned = cleaned.strip()
+        return json.loads(cleaned)
+    except (json.JSONDecodeError, IndexError):
         return {
             "executive_summary": response[:500] if response else "Analysis complete.",
             "critical_action": "Review the detailed agent reports below.",

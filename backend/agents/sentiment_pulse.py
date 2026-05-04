@@ -183,6 +183,12 @@ Respond in JSON format only with keys: overall_assessment, critical_insight, rec
     )
 
     try:
-        return json.loads(response)
-    except json.JSONDecodeError:
+        cleaned = response.strip()
+        if cleaned.startswith("```"):
+            cleaned = cleaned.split("```", 2)[1]
+            if cleaned.startswith("json"):
+                cleaned = cleaned[4:]
+            cleaned = cleaned.strip()
+        return json.loads(cleaned)
+    except (json.JSONDecodeError, IndexError):
         return {"raw_analysis": response}

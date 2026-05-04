@@ -16,7 +16,7 @@ import json
 import logging
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 # Ensure the project root is in sys.path for imports to work in all environments
 _project_root = str(Path(__file__).resolve().parent.parent)
@@ -66,10 +66,17 @@ def load_mock_data() -> dict:
 
 class ChatRequest(BaseModel):
     question: str
+    custom_data: Optional[dict] = None
 
 
 class AnalyzeRequest(BaseModel):
     question: Optional[str] = None
+    jira_tickets: Optional[List[dict]] = None
+    slack_messages: Optional[List[dict]] = None
+    sprint_data: Optional[dict] = None
+    company: Optional[str] = None
+    project: Optional[str] = None
+    computed: Optional[dict] = None
 
 
 @app.get("/health")
@@ -90,14 +97,23 @@ async def analyze(request: AnalyzeRequest = AnalyzeRequest()):
     """
     Run all 3 OrgMind agents (Blocker Scout, Sentiment Pulse, Velocity Tracker)
     in parallel, then synthesize results via the Orchestrator.
-    Returns a unified organizational health report.
+    Accepts custom data from frontend onboarding, or falls back to default mock data.
     """
     try:
-        data = load_mock_data()
+        if request.jira_tickets and request.slack_messages and request.sprint_data:
+            tickets = request.jira_tickets
+            slack_messages = request.slack_messages
+            sprint_data = request.sprint_data
+        else:
+            data = load_mock_data()
+            tickets = data["jira_tickets"]
+            slack_messages = data["slack_messages"]
+            sprint_data = data["sprint_data"]
+
         report = await run_full_analysis(
-            tickets=data["jira_tickets"],
-            slack_messages=data["slack_messages"],
-            sprint_data=data["sprint_data"],
+            tickets=tickets,
+            slack_messages=slack_messages,
+            sprint_data=sprint_data,
             user_question=request.question,
         )
 
@@ -118,20 +134,21 @@ async def chat(request: ChatRequest):
     using the latest analysis data as context.
     """
     try:
-        data = load_mock_data()
-
-        # Build context from mock data directly for fast chat responses
-        context = json.dumps({
-            "company": data["company"],
-            "project": data["project"],
-            "total_tickets": len(data["jira_tickets"]),
-            "stuck_tickets": [t for t in data["jira_tickets"] if t["status"] == "In Progress"],
-            "sprint": data["sprint_data"]["sprint_name"],
-            "planned_points": data["sprint_data"]["planned_story_points"],
-            "completed_points": data["sprint_data"]["completed_story_points"],
-            "days_remaining": data["sprint_data"]["days_remaining"],
-            "recent_slack": [m["text"] for m in data["slack_messages"][:10]],
-        }, indent=2)
+        if request.custom_data:
+            context = json.dumps(request.custom_data, indent=2)
+        else:
+            data = load_mock_data()
+            context = json.dumps({
+                "company": data["company"],
+                "project": data["project"],
+                "total_tickets": len(data["jira_tickets"]),
+                "stuck_tickets": [t for t in data["jira_tickets"] if t["status"] == "In Progress"],
+                "sprint": data["sprint_data"]["sprint_name"],
+                "planned_points": data["sprint_data"]["planned_story_points"],
+                "completed_points": data["sprint_data"]["completed_story_points"],
+                "days_remaining": data["sprint_data"]["days_remaining"],
+                "recent_slack": [m["text"] for m in data["slack_messages"][:10]],
+            }, indent=2)
 
         answer = await amd_client.chat(request.question, context)
 

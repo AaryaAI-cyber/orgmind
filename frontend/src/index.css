@@ -9,6 +9,33 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Input/Select field styles */
+.input-field {
+  @apply w-full bg-navy-900 border border-navy-700 rounded-lg px-4 py-2.5 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-amd-purple transition-colors;
+}
+
+select.input-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+select.input-field option {
+  background: #1E293B;
+  color: #E5E7EB;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-6 py-2.5 bg-amd-purple hover:bg-amd-purple-dark text-white font-semibold rounded-lg transition-colors text-sm;
+}
+
+.btn-secondary {
+  @apply px-6 py-2.5 bg-navy-700 hover:bg-navy-800 text-gray-300 font-medium rounded-lg transition-colors text-sm border border-navy-700;
+}
+
 /* Typewriter animation for chat responses */
 @keyframes typewriter {
   from { width: 0; }
@@ -28,6 +55,16 @@ body {
 
 .pulse-glow {
   animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+/* Slide up for toast */
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
 }
 
 /* Scrollbar styling */
