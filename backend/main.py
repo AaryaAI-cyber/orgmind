@@ -73,7 +73,7 @@ async def health_check():
         "demo_mode": amd_client.is_demo_mode,
         "amd_connected": not amd_client.is_demo_mode,
         "inference_engine": "AMD Instinct MI300X + ROCm" if not amd_client.is_demo_mode else "Demo Mode",
-        "model": "Qwen/Qwen2.5-72B-Instruct",
+        "model": amd_client.model,
     }
 
 
@@ -112,30 +112,24 @@ async def chat(request: ChatRequest):
     try:
         data = load_mock_data()
 
-        # Run a quick analysis to get fresh context
-        report = await run_full_analysis(
-            tickets=data["jira_tickets"],
-            slack_messages=data["slack_messages"],
-            sprint_data=data["sprint_data"],
-            user_question=request.question,
-        )
+        # Build context from mock data directly for fast chat responses
+        context = json.dumps({
+            "company": data["company"],
+            "project": data["project"],
+            "total_tickets": len(data["jira_tickets"]),
+            "stuck_tickets": [t for t in data["jira_tickets"] if t["status"] == "In Progress"],
+            "sprint": data["sprint_data"]["sprint_name"],
+            "planned_points": data["sprint_data"]["planned_story_points"],
+            "completed_points": data["sprint_data"]["completed_story_points"],
+            "days_remaining": data["sprint_data"]["days_remaining"],
+            "recent_slack": [m["text"] for m in data["slack_messages"][:10]],
+        }, indent=2)
 
-        # Use the orchestrator's answer or get a chat-specific response
-        answer = report.get("answer_to_question", "")
-        if not answer:
-            context = json.dumps({
-                "org_health_score": report["org_health_score"],
-                "executive_summary": report["executive_summary"],
-                "blocker_count": report["blocker_data"]["total_blockers"],
-                "sentiment": report["sentiment_data"]["overall_sentiment"],
-                "deadline_miss_prob": report["velocity_data"]["deadline_miss_probability"],
-            })
-            answer = await amd_client.chat(request.question, context)
+        answer = await amd_client.chat(request.question, context)
 
         return {
             "question": request.question,
             "answer": answer,
-            "org_health_score": report["org_health_score"],
             "demo_mode": amd_client.is_demo_mode,
         }
     except Exception as e:
