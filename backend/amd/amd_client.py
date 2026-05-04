@@ -90,7 +90,7 @@ class AMDCloudClient:
         try:
             async with httpx.AsyncClient(timeout=90.0) as client:
                 response = await client.post(
-                    f"{self.endpoint.rstrip('/')}/v1/chat/completions",
+                    f"{self.endpoint.rstrip('/')}/chat/completions",
                     headers={
                         "Authorization": f"Bearer {self.api_key}",
                         "Content-Type": "application/json",
