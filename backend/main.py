@@ -165,7 +165,7 @@ if _frontend_dist.exists():
     async def serve_frontend(full_path: str):
         """Serve the React SPA for any non-API route."""
         file_path = (_frontend_dist / full_path).resolve()
-        if not str(file_path).startswith(str(_frontend_dist.resolve())):
+        if not str(file_path).startswith(str(_frontend_dist.resolve()) + "/"):
             return FileResponse(str(_frontend_dist / "index.html"))
         if file_path.exists() and file_path.is_file():
             return FileResponse(str(file_path))
