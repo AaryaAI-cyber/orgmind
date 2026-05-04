@@ -7,7 +7,7 @@ import SentimentGraph from './components/SentimentGraph'
 import DeadlineCard from './components/DeadlineCard'
 import AskOrgMind from './components/AskOrgMind'
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api'
+const API_BASE = import.meta.env.VITE_API_URL || ''
 
 function App() {
   const [analysisData, setAnalysisData] = useState(null)
