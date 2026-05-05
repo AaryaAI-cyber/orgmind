@@ -1,13 +1,20 @@
-/**
- * Deadline Prediction Card
- * Shows deadline miss probability, predicted vs original dates,
- * delay prediction, and at-risk features.
- */
+// DeadlineCard.jsx
+// ============================================================
+// Deadline Prediction Card
+// Shows deadline miss probability with color coding,
+// predicted vs original dates, delay badge,
+// velocity comparison, and at-risk features list.
+// Tooltip explains the mathematical prediction formula.
+// ============================================================
+
+import Tooltip from './Tooltip'
+
 export default function DeadlineCard({ velocityData }) {
   if (!velocityData) return null
 
   const missProb = velocityData.deadline_miss_probability || 0
 
+  // Color coding for miss probability
   const getProbColor = (p) => {
     if (p > 60) return 'text-red-400'
     if (p > 30) return 'text-amber-400'
@@ -27,11 +34,13 @@ export default function DeadlineCard({ velocityData }) {
         </div>
       </div>
 
-      {/* Big probability */}
+      {/* Big probability with tooltip */}
       <div className="text-center mb-6">
-        <div className={`text-5xl font-extrabold ${getProbColor(missProb)}`}>
-          {missProb}%
-        </div>
+        <Tooltip text="Probability calculated from velocity math: actual completion rate vs required rate to hit the deadline. Formula: remaining_points / actual_velocity = days_needed. This is not a guarantee — use as an early warning signal." position="bottom">
+          <div className={`text-5xl font-extrabold ${getProbColor(missProb)} cursor-help inline-block`}>
+            {missProb}%
+          </div>
+        </Tooltip>
         <p className="text-sm text-gray-400 mt-1">chance of missing deadline</p>
       </div>
 
@@ -71,9 +80,11 @@ export default function DeadlineCard({ velocityData }) {
           <p className="text-xs text-gray-500">Required velocity</p>
         </div>
         <div className="text-center">
-          <p className="text-lg font-bold text-gray-200">
-            {velocityData.completed_points}/{velocityData.planned_points}
-          </p>
+          <Tooltip text="Story points completed out of total planned for this sprint." position="top">
+            <p className="text-lg font-bold text-gray-200 cursor-help">
+              {velocityData.completed_points}/{velocityData.planned_points}
+            </p>
+          </Tooltip>
           <p className="text-xs text-gray-500">Points done</p>
         </div>
       </div>
@@ -101,10 +112,10 @@ export default function DeadlineCard({ velocityData }) {
           <div className="flex flex-wrap gap-2">
             {velocityData.at_risk_features.map((feature) => (
               <span
-                key={feature}
+                key={typeof feature === 'string' ? feature : feature.name}
                 className="px-2 py-1 bg-red-900/20 text-red-300 text-xs rounded border border-red-700/30"
               >
-                {feature}
+                {typeof feature === 'string' ? feature : `${feature.name} (${feature.points} pts)`}
               </span>
             ))}
           </div>
