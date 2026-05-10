@@ -1,14 +1,18 @@
-/**
- * Sentiment Graph Component
- * Uses Recharts to display team sentiment trends over time.
- * Shows one line per team with color coding based on score.
- */
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts'
+// SentimentGraph.jsx
+// ============================================================
+// Recharts LineChart showing team sentiment trends over time.
+// One line per team with color coding based on score.
+// Reference lines at 70 (healthy) and 50 (critical).
+// Tooltip explains privacy-first team-level analysis.
+// ============================================================
+
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts'
+import Tooltip from './Tooltip'
 
 export default function SentimentGraph({ sentimentData }) {
   if (!sentimentData) return null
 
-  // Build chart data from weekly history
+  // Build chart data from weekly sentiment history
   const weekLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Current']
   const history = sentimentData.weekly_sentiment_history || [80, 75, 72, 65, 58]
   const chartData = weekLabels.map((label, i) => ({
@@ -16,7 +20,7 @@ export default function SentimentGraph({ sentimentData }) {
     'Overall': history[i] || 50,
   }))
 
-  // Get team breakdown
+  // Get team-level breakdown
   const teams = sentimentData.teams || []
 
   return (
@@ -26,9 +30,11 @@ export default function SentimentGraph({ sentimentData }) {
           <h2 className="text-sm font-medium text-gray-400 uppercase tracking-wider">
             Team Sentiment
           </h2>
-          <p className="text-xs text-gray-500 mt-1">
-            Communication tone analysis (team-level only)
-          </p>
+          <Tooltip text="Team-level morale analysis. Privacy-first: individual messages never stored or scored. Below 70 = early warning. Below 50 = intervention needed." position="bottom">
+            <p className="text-xs text-gray-500 mt-1 cursor-help border-b border-dotted border-gray-700 inline">
+              Communication tone analysis (team-level only)
+            </p>
+          </Tooltip>
         </div>
         <div className={`flex items-center gap-2 text-sm ${
           sentimentData.trend === 'declining' ? 'text-red-400' :
@@ -40,14 +46,14 @@ export default function SentimentGraph({ sentimentData }) {
         </div>
       </div>
 
-      {/* Chart */}
+      {/* Recharts line chart */}
       <div className="h-48 mb-4">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
             <XAxis dataKey="week" tick={{ fill: '#94A3B8', fontSize: 11 }} />
             <YAxis domain={[0, 100]} tick={{ fill: '#94A3B8', fontSize: 11 }} />
-            <Tooltip
+            <RechartsTooltip
               contentStyle={{ background: '#1E293B', border: '1px solid #475569', borderRadius: '8px', color: '#fff' }}
               labelStyle={{ color: '#94A3B8' }}
             />
