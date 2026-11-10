@@ -58,7 +58,7 @@ class AMDCloudClient:
     def __init__(self):
         self.endpoint = os.getenv("AMD_CLOUD_ENDPOINT", "")
         self.api_key = os.getenv("AMD_CLOUD_API_KEY", "")
-        self.model = "Qwen/Qwen2.5-72B-Instruct"
+        self.model = os.getenv("AMD_MODEL", "accounts/fireworks/models/llama-v3p3-70b-instruct")
         self.demo_mode = os.getenv("DEMO_MODE", "true").lower() == "true"
 
         if not self.endpoint or not self.api_key:
@@ -90,7 +90,7 @@ class AMDCloudClient:
         try:
             async with httpx.AsyncClient(timeout=90.0) as client:
                 response = await client.post(
-                    f"{self.endpoint.rstrip('/')}/v1/chat/completions",
+                    f"{self.endpoint.rstrip('/')}/chat/completions",
                     headers={
                         "Authorization": f"Bearer {self.api_key}",
                         "Content-Type": "application/json",
@@ -136,7 +136,29 @@ Provide a clear, actionable answer in 2-4 sentences. Reference specific data poi
         if self.demo_mode:
             return self._generate_demo_chat_response(user_question)
 
-        return await self.generate(prompt, system_prompt)
+        try:
+            async with httpx.AsyncClient(timeout=90.0) as client:
+                response = await client.post(
+                    f"{self.endpoint.rstrip('/')}/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {self.api_key}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": self.model,
+                        "messages": [
+                            {"role": "system", "content": system_prompt},
+                            {"role": "user", "content": prompt},
+                        ],
+                        "max_tokens": 500,
+                        "temperature": 0.4,
+                    },
+                )
+                response.raise_for_status()
+                return response.json()["choices"][0]["message"]["content"]
+        except Exception as e:
+            logger.error(f"Chat API error: {e}. Using demo fallback.")
+            return self._generate_demo_chat_response(user_question)
 
     def _generate_demo_chat_response(self, question: str) -> str:
         """Generate contextual demo responses based on common question patterns."""

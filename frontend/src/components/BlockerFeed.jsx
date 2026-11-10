@@ -1,10 +1,4 @@
-/**
- * Blocker Feed Component
- * Lists silent blockers detected by Agent 1 (Blocker Scout).
- * Shows ticket ID, title, days stuck, assignee, Slack mention status,
- * and recommended action for each blocker.
- */
-export default function BlockerFeed({ blockerData }) {
+export default function BlockerFeed({ blockerData, onResolve, onAddTicket }) {
   if (!blockerData) return null
 
   const blockers = blockerData.critical_blockers || []
@@ -20,10 +14,18 @@ export default function BlockerFeed({ blockerData }) {
             Tickets stuck 5+ days with no escalation
           </p>
         </div>
-        <div className={`px-3 py-1 rounded-full text-xs font-bold ${
-          blockers.length === 0 ? 'bg-green-900/40 text-green-400' : 'bg-red-900/40 text-red-400'
-        }`}>
-          {blockers.length === 0 ? 'All Clear' : `${blockers.length} Found`}
+        <div className="flex items-center gap-2">
+          {onAddTicket && (
+            <button onClick={onAddTicket}
+              className="px-2 py-1 rounded text-xs text-amd-purple-light border border-amd-purple/30 hover:bg-amd-purple/10 transition-colors">
+              + Add Ticket
+            </button>
+          )}
+          <div className={`px-3 py-1 rounded-full text-xs font-bold ${
+            blockers.length === 0 ? 'bg-green-900/40 text-green-400' : 'bg-red-900/40 text-red-400'
+          }`}>
+            {blockers.length === 0 ? 'All Clear' : `${blockers.length} Found`}
+          </div>
         </div>
       </div>
 
@@ -36,7 +38,7 @@ export default function BlockerFeed({ blockerData }) {
           {blockers.map((blocker) => (
             <div
               key={blocker.ticket_id}
-              className="bg-navy-900/60 rounded-lg p-4 border border-navy-700 hover:border-navy-600 transition-colors"
+              className="bg-navy-900/60 rounded-lg p-4 border border-navy-700 hover:border-navy-600 transition-all"
             >
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
@@ -79,10 +81,17 @@ export default function BlockerFeed({ blockerData }) {
                 )}
               </div>
 
-              {/* Recommendation */}
-              <p className="text-xs text-gray-400 italic">
-                {blocker.recommended_action}
-              </p>
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-gray-400 italic flex-1">
+                  {blocker.recommended_action}
+                </p>
+                {onResolve && (
+                  <button onClick={() => onResolve(blocker.ticket_id)}
+                    className="ml-3 px-3 py-1 rounded text-xs text-green-400 border border-green-700/50 hover:bg-green-900/30 transition-colors whitespace-nowrap">
+                    Mark Resolved
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>

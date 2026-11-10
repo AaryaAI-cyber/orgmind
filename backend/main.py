@@ -14,12 +14,20 @@ Falls back to Demo Mode when AMD credentials are not configured.
 
 import json
 import logging
+import sys
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
+
+# Ensure the project root is in sys.path for imports to work in all environments
+_project_root = str(Path(__file__).resolve().parent.parent)
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 load_dotenv()
@@ -58,10 +66,17 @@ def load_mock_data() -> dict:
 
 class ChatRequest(BaseModel):
     question: str
+    custom_data: Optional[dict] = None
 
 
 class AnalyzeRequest(BaseModel):
     question: Optional[str] = None
+    jira_tickets: Optional[List[dict]] = None
+    slack_messages: Optional[List[dict]] = None
+    sprint_data: Optional[dict] = None
+    company: Optional[str] = None
+    project: Optional[str] = None
+    computed: Optional[dict] = None
 
 
 @app.get("/health")
@@ -73,7 +88,7 @@ async def health_check():
         "demo_mode": amd_client.is_demo_mode,
         "amd_connected": not amd_client.is_demo_mode,
         "inference_engine": "AMD Instinct MI300X + ROCm" if not amd_client.is_demo_mode else "Demo Mode",
-        "model": "Qwen/Qwen2.5-72B-Instruct",
+        "model": amd_client.model,
     }
 
 
@@ -82,14 +97,23 @@ async def analyze(request: AnalyzeRequest = AnalyzeRequest()):
     """
     Run all 3 OrgMind agents (Blocker Scout, Sentiment Pulse, Velocity Tracker)
     in parallel, then synthesize results via the Orchestrator.
-    Returns a unified organizational health report.
+    Accepts custom data from frontend onboarding, or falls back to default mock data.
     """
     try:
-        data = load_mock_data()
+        if request.jira_tickets and request.slack_messages and request.sprint_data:
+            tickets = request.jira_tickets
+            slack_messages = request.slack_messages
+            sprint_data = request.sprint_data
+        else:
+            data = load_mock_data()
+            tickets = data["jira_tickets"]
+            slack_messages = data["slack_messages"]
+            sprint_data = data["sprint_data"]
+
         report = await run_full_analysis(
-            tickets=data["jira_tickets"],
-            slack_messages=data["slack_messages"],
-            sprint_data=data["sprint_data"],
+            tickets=tickets,
+            slack_messages=slack_messages,
+            sprint_data=sprint_data,
             user_question=request.question,
         )
 
@@ -110,32 +134,27 @@ async def chat(request: ChatRequest):
     using the latest analysis data as context.
     """
     try:
-        data = load_mock_data()
-
-        # Run a quick analysis to get fresh context
-        report = await run_full_analysis(
-            tickets=data["jira_tickets"],
-            slack_messages=data["slack_messages"],
-            sprint_data=data["sprint_data"],
-            user_question=request.question,
-        )
-
-        # Use the orchestrator's answer or get a chat-specific response
-        answer = report.get("answer_to_question", "")
-        if not answer:
+        if request.custom_data:
+            context = json.dumps(request.custom_data, indent=2)
+        else:
+            data = load_mock_data()
             context = json.dumps({
-                "org_health_score": report["org_health_score"],
-                "executive_summary": report["executive_summary"],
-                "blocker_count": report["blocker_data"]["total_blockers"],
-                "sentiment": report["sentiment_data"]["overall_sentiment"],
-                "deadline_miss_prob": report["velocity_data"]["deadline_miss_probability"],
-            })
-            answer = await amd_client.chat(request.question, context)
+                "company": data["company"],
+                "project": data["project"],
+                "total_tickets": len(data["jira_tickets"]),
+                "stuck_tickets": [t for t in data["jira_tickets"] if t["status"] == "In Progress"],
+                "sprint": data["sprint_data"]["sprint_name"],
+                "planned_points": data["sprint_data"]["planned_story_points"],
+                "completed_points": data["sprint_data"]["completed_story_points"],
+                "days_remaining": data["sprint_data"]["days_remaining"],
+                "recent_slack": [m["text"] for m in data["slack_messages"][:10]],
+            }, indent=2)
+
+        answer = await amd_client.chat(request.question, context)
 
         return {
             "question": request.question,
             "answer": answer,
-            "org_health_score": report["org_health_score"],
             "demo_mode": amd_client.is_demo_mode,
         }
     except Exception as e:
@@ -152,6 +171,22 @@ async def get_history():
     except Exception as e:
         logger.error(f"History error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# Serve frontend static files if the dist directory exists
+_frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if _frontend_dist.exists():
+    app.mount("/assets", StaticFiles(directory=str(_frontend_dist / "assets")), name="static")
+
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        """Serve the React SPA for any non-API route."""
+        file_path = (_frontend_dist / full_path).resolve()
+        if not str(file_path).startswith(str(_frontend_dist.resolve()) + "/"):
+            return FileResponse(str(_frontend_dist / "index.html"))
+        if file_path.exists() and file_path.is_file():
+            return FileResponse(str(file_path))
+        return FileResponse(str(_frontend_dist / "index.html"))
 
 
 if __name__ == "__main__":

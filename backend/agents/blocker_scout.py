@@ -27,7 +27,7 @@ async def analyze(tickets: list[dict[str, Any]], slack_messages: list[dict[str, 
     with no updates. Cross-references Slack messages to find issues that were
     discussed by engineers but never escalated to PMs.
     """
-    today = datetime(2026, 5, 4)
+    today = datetime.now()
     silent_blockers = []
 
     # Collect all ticket IDs mentioned in Slack for cross-reference
@@ -123,6 +123,12 @@ Respond in JSON format only with keys: severity_score, critical_action, delivery
     )
 
     try:
-        return json.loads(response)
-    except json.JSONDecodeError:
+        cleaned = response.strip()
+        if cleaned.startswith("```"):
+            cleaned = cleaned.split("```", 2)[1]
+            if cleaned.startswith("json"):
+                cleaned = cleaned[4:]
+            cleaned = cleaned.strip()
+        return json.loads(cleaned)
+    except (json.JSONDecodeError, IndexError):
         return {"raw_analysis": response}

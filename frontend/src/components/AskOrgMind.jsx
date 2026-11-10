@@ -1,23 +1,17 @@
-/**
- * Ask OrgMind Chat Component
- * Conversational interface where users can ask natural language questions
- * about their organization. Shows pre-suggested question chips and
- * typewriter effect for responses.
- */
 import { useState } from 'react'
 import axios from 'axios'
 
-const SUGGESTED_QUESTIONS = [
-  "What's blocking Team Backend?",
-  "Will we make the deadline?",
-  "Which team needs the most help?",
-  "What's the biggest risk right now?",
-]
-
-export default function AskOrgMind({ apiBase, demoMode }) {
+export default function AskOrgMind({ apiBase, demoMode, projectName, teamNames, deadline, onLogUpdate }) {
   const [question, setQuestion] = useState('')
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const suggestedQuestions = [
+    `What's blocking ${projectName || 'the project'}?`,
+    teamNames?.length ? `How is ${teamNames[0]} doing?` : 'Which team needs the most help?',
+    deadline ? `Will ${projectName || 'we'} meet the ${deadline} deadline?` : 'Will we make the deadline?',
+    "What's the biggest risk right now?",
+  ]
 
   const askQuestion = async (q) => {
     const questionText = q || question
@@ -54,14 +48,22 @@ export default function AskOrgMind({ apiBase, demoMode }) {
             Ask anything about your organization's health
           </p>
         </div>
-        {demoMode && (
-          <span className="text-xs text-yellow-400 bg-yellow-900/30 px-2 py-1 rounded">Demo Mode</span>
-        )}
+        <div className="flex items-center gap-2">
+          {onLogUpdate && (
+            <button onClick={onLogUpdate}
+              className="px-2 py-1 rounded text-xs text-amd-purple-light border border-amd-purple/30 hover:bg-amd-purple/10 transition-colors">
+              + Log Team Update
+            </button>
+          )}
+          {demoMode && (
+            <span className="text-xs text-yellow-400 bg-yellow-900/30 px-2 py-1 rounded">Demo Mode</span>
+          )}
+        </div>
       </div>
 
       {/* Suggested questions */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {SUGGESTED_QUESTIONS.map((sq) => (
+        {suggestedQuestions.map((sq) => (
           <button
             key={sq}
             onClick={() => askQuestion(sq)}
